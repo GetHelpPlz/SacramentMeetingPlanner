@@ -1,0 +1,168 @@
+﻿@model SacramentMeetingPlanner.Models.Meeting
+
+@{
+    ViewData["Title"] = "Edit Meeting";
+}
+
+<h2>Edit Meeting</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="MeetingDateTime">Meeting Date & Time</label>
+        <input asp-for="MeetingDateTime" class="form-control" type="datetime-local"
+               value="@Model.MeetingDateTime.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="MeetingDateTime" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <div class="hymns-section mb-3">
+        <h4>Hymns</h4>
+        <div id="hymns-container">
+            @if (Model.Hymns != null && Model.Hymns.Count > 0)
+            {
+                for (int i = 0; i < Model.Hymns.Count; i++)
+                {
+                    <div class="row mb-2" data-hymn-row="@i">
+                        <div class="col-md-5">
+                            <label>Hymn Purpose</label>
+                            <input type="text" class="form-control" name="Hymns[@i].Purpose"
+                                   value="@Model.Hymns[i].Purpose" placeholder="E.g., Opening Hymn" />
+                        </div>
+                        <div class="col-md-5">
+                            <label>Select Hymn</label>
+                            <select class="form-control" name="Hymns[@i].SelectedHymn">
+                                <option value="">-- Choose Hymn --</option>
+                                @*  *@
+                                <option value="@Model.Hymns[i].SelectedHymn" selected="selected">
+                                    @Model.Hymns[i].SelectedHymn
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger remove-hymn-btn">Remove</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" id="add-hymn-btn">+ Add Hymn</button>
+    </div>
+
+    <hr />
+
+    <!-- Speakers -->
+    <div class="speakers-section mb-3">
+        <h4>Speakers</h4>
+        <div id="speakers-container">
+            @if (Model.Speakers != null && Model.Speakers.Count > 0)
+            {
+                for (int i = 0; i < Model.Speakers.Count; i++)
+                {
+                    <div class="row mb-2" data-speaker-row="@i">
+                        <div class="col-md-5">
+                            <label>Topic</label>
+                            <input type="text" class="form-control" name="Speakers[@i].Topic"
+                                   value="@Model.Speakers[i].Topic" placeholder="E.g., Faith and Works" />
+                        </div>
+                        <div class="col-md-5">
+                            <label>Select Speaker</label>
+                            <select class="form-control" name="Speakers[@i].SelectedSpeaker">
+                                <option value="">-- Choose Speaker --</option>
+                                <option value="@Model.Speakers[i].SelectedSpeaker" selected="selected">
+                                    @Model.Speakers[i].SelectedSpeaker
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger remove-speaker-btn">Remove</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" id="add-speaker-btn">+ Add Speaker</button>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        let hymnIndex = @Model.Hymns?.Count() ?? 0;
+        let speakerIndex = @Model.Speakers?.Count() ?? 0;
+
+        const hymnsContainer = document.getElementById("hymns-container");
+        const addHymnBtn = document.getElementById("add-hymn-btn");
+
+        addHymnBtn.addEventListener("click", () => {
+            const hymnHtml = `
+                <div class="row mb-2" data-hymn-row="${hymnIndex}">
+                    <div class="col-md-5">
+                        <label>Hymn Purpose</label>
+                        <input type="text" class="form-control" name="Hymns[${hymnIndex}].Purpose" placeholder="E.g., Opening Hymn" />
+                    </div>
+                    <div class="col-md-5">
+                        <label>Select Hymn</label>
+                        <select class="form-control" name="Hymns[${hymnIndex}].SelectedHymn">
+                            <option value="">-- Choose Hymn --</option>
+                            <!-- Option list should be populated as needed -->
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-hymn-btn">Remove</button>
+                    </div>
+                </div>`;
+            hymnsContainer.insertAdjacentHTML("beforeend", hymnHtml);
+            hymnIndex++;
+        });
+
+        hymnsContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("remove-hymn-btn")) {
+                const row = event.target.closest("[data-hymn-row]");
+                row.remove();
+            }
+        });
+
+        const speakersContainer = document.getElementById("speakers-container");
+        const addSpeakerBtn = document.getElementById("add-speaker-btn");
+
+        addSpeakerBtn.addEventListener("click", () => {
+            const speakerHtml = `
+                <div class="row mb-2" data-speaker-row="${speakerIndex}">
+                    <div class="col-md-5">
+                        <label>Topic</label>
+                        <input type="text" class="form-control" name="Speakers[${speakerIndex}].Topic" placeholder="E.g., Faith and Works" />
+                    </div>
+                    <div class="col-md-5">
+                        <label>Select Speaker</label>
+                        <select class="form-control" name="Speakers[${speakerIndex}].SelectedSpeaker">
+                            <option value="">-- Choose Speaker --</option>
+                            <!-- Option list should be populated as needed -->
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-speaker-btn">Remove</button>
+                    </div>
+                </div>`;
+            speakersContainer.insertAdjacentHTML("beforeend", speakerHtml);
+            speakerIndex++;
+        });
+
+        speakersContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("remove-speaker-btn")) {
+                const row = event.target.closest("[data-speaker-row]");
+                row.remove();
+            }
+        });
+    </script>
+}

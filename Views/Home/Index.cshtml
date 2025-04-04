@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Sacrament Meeting Planner</h1>
+    <p class="lead">Manage your meetings, speakers, and hymns.</p>
+
+    <div class="mt-4">
+        <a class="btn btn-primary m-2" asp-controller="Meetings" asp-action="Create">Create New Meeting</a>
+        <a class="btn btn-secondary m-2" asp-controller="Meetings" asp-action="Index">View Meetings</a>
+        <a class="btn btn-info m-2" asp-controller="Speakers" asp-action="Index">See Our Speakers</a>
+        <a class="btn btn-success m-2" asp-controller="Hymns" asp-action="Index">Hymn</a>
+    </div>
+</div>

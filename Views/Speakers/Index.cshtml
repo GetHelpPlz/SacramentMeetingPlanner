@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SacramentMeetingPlanner.Models.Speaker>
+
+@{
+    ViewData["Title"] = "Speakers";
+}
+
+<h2>Speakers</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add Speaker</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var speaker in Model)
+        {
+            <tr>
+                <td>@speaker.FirstName</td>
+                <td>@speaker.LastName</td>
+                <td>@speaker.Gender</td>
+                <td>@speaker.Age</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@speaker.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@speaker.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@speaker.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

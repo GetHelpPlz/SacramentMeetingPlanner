@@ -1,0 +1,53 @@
+﻿@model SacramentMeetingPlanner.Models.Meeting
+
+@{
+    ViewData["Title"] = "Meeting Details";
+}
+
+<h2>Meeting Details</h2>
+
+<div>
+    <h4>Date & Time: @Model.MeetingDateTime.ToString("f")</h4>
+</div>
+
+<hr />
+
+<h4>Hymns</h4>
+@if (Model.Hymns != null && Model.Hymns.Count > 0)
+{
+    <ul>
+        @foreach (var hymn in Model.Hymns)
+        {
+            <li><strong>@hymn.Purpose:</strong> @hymn.SelectedHymn</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hymns assigned.</p>
+}
+
+<hr />
+
+<h4>Speakers</h4>
+@if (Model.Speakers != null && Model.Speakers.Count > 0)
+{
+    <ul>
+        @foreach (var speaker in Model.Speakers)
+        {
+            <li><strong>@speaker.Topic:</strong> @speaker.SelectedSpeaker</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No speakers assigned.</p>
+}
+
+<hr />
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+</div>

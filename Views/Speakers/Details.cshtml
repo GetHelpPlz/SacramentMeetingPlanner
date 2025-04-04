@@ -1,0 +1,34 @@
+﻿@model SacramentMeetingPlanner.Models.Speaker
+
+@{
+    ViewData["Title"] = "Speaker Details";
+}
+
+<h2>Speaker Details</h2>
+
+<div class="form-group">
+    <label>First Name:</label>
+    <p>@Model.FirstName</p>
+</div>
+<div class="form-group">
+    <label>Last Name:</label>
+    <p>@Model.LastName</p>
+</div>
+<div class="form-group">
+    <label>Gender:</label>
+    <p>@Model.Gender</p>
+</div>
+<div class="form-group">
+    <label>Age:</label>
+    <p>@Model.Age</p>
+</div>
+<div class="form-group">
+    <label>Notes:</label>
+    <p>@Model.Notes</p>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+</div>

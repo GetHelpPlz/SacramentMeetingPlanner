@@ -1,0 +1,129 @@
+﻿@using System.Text.Json
+@model SacramentMeetingPlanner.Models.Meeting
+
+@{
+    ViewData["Title"] = "Create New Meeting";
+}
+
+<h2>Create New Meeting</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="MeetingDateTime">Meeting Date & Time</label>
+        <input asp-for="MeetingDateTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="MeetingDateTime" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <!-- Hymns -->
+    <div class="hymns-section mb-3">
+        <h4>Hymns</h4>
+        <div id="hymns-container">
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" id="add-hymn-btn">+ Add Hymn</button>
+    </div>
+
+    <hr />
+
+    <!-- Speakers -->
+    <div class="speakers-section mb-3">
+        <h4>Speakers</h4>
+        <div id="speakers-container">
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" id="add-speaker-btn">+ Add Speaker</button>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var speakerOptions = @Html.Raw(JsonSerializer.Serialize(ViewBag.SpeakerOptions));
+        var hymnOptions = @Html.Raw(JsonSerializer.Serialize(ViewBag.HymnOptions));
+    </script>
+
+    <script>
+        let hymnIndex = 0;
+        let speakerIndex = 0;
+
+        const hymnsContainer = document.getElementById("hymns-container");
+        const addHymnBtn = document.getElementById("add-hymn-btn");
+
+        addHymnBtn.addEventListener("click", () => {
+            let hymnOptionsHtml = '<option value="">-- Choose Hymn --</option>';
+            hymnOptions.forEach(function (hymn) {
+                hymnOptionsHtml += `<option value="${hymn.Id}">${hymn.Name}</option>`;
+            });
+
+            const hymnHtml = `
+                <div class="row mb-2" data-hymn-row="${hymnIndex}">
+                    <div class="col-md-5">
+                        <label>Hymn Purpose</label>
+                        <input type="text" class="form-control" name="Hymns[${hymnIndex}].Purpose" placeholder="E.g., Opening Hymn" />
+                    </div>
+                    <div class="col-md-5">
+                        <label>Select Hymn</label>
+                        <select class="form-control" name="Hymns[${hymnIndex}].SelectedHymn">
+                            ${hymnOptionsHtml}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-hymn-btn">Remove</button>
+                    </div>
+                </div>`;
+            hymnsContainer.insertAdjacentHTML("beforeend", hymnHtml);
+            hymnIndex++;
+        });
+
+        hymnsContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("remove-hymn-btn")) {
+                const row = event.target.closest("[data-hymn-row]");
+                row.remove();
+            }
+        });
+
+        const speakersContainer = document.getElementById("speakers-container");
+        const addSpeakerBtn = document.getElementById("add-speaker-btn");
+
+        addSpeakerBtn.addEventListener("click", () => {
+            let speakerOptionsHtml = '<option value="">-- Choose Speaker --</option>';
+            speakerOptions.forEach(function (speaker) {
+                speakerOptionsHtml += `<option value="${speaker.Id}">${speaker.FullName}</option>`;
+            });
+
+            const speakerHtml = `
+                <div class="row mb-2" data-speaker-row="${speakerIndex}">
+                    <div class="col-md-5">
+                        <label>Topic</label>
+                        <input type="text" class="form-control" name="Speakers[${speakerIndex}].Topic" placeholder="E.g., Faith and Works" />
+                    </div>
+                    <div class="col-md-5">
+                        <label>Select Speaker</label>
+                        <select class="form-control" name="Speakers[${speakerIndex}].SelectedSpeaker">
+                            ${speakerOptionsHtml}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-speaker-btn">Remove</button>
+                    </div>
+                </div>`;
+            speakersContainer.insertAdjacentHTML("beforeend", speakerHtml);
+            speakerIndex++;
+        });
+
+        speakersContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("remove-speaker-btn")) {
+                const row = event.target.closest("[data-speaker-row]");
+                row.remove();
+            }
+        });
+    </script>
+}

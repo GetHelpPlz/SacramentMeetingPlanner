@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SacramentMeetingPlanner.Models.Meeting>
+
+@{
+    string currentSort = ViewBag.CurrentSort as string ?? "";
+    string dateSortParam = currentSort == "date_desc" ? "" : "date_desc";
+}
+
+@{
+    ViewData["Title"] = "Meetings";
+}
+
+string dateSortParam = (string)ViewBag.CurrentSort == "date_desc" ? "" : "date_desc";
+
+<h2>Meetings</h2>
+
+<p>
+    Sort by date:
+    <a asp-action="Index" asp-route-sortOrder="@dateSortParam">
+        @(currentSort == "date_desc" ? "Ascending" : "Descending")
+    </a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date & Time</th>
+            <th># Hymns</th>
+            <th># Speakers</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var meeting in Model)
+        {
+            <tr>
+                <td>
+                    <!-- Show short date/time, 4/10/2025 10:30 PM -->
+                    @meeting.MeetingDateTime.ToString("g")
+                </td>
+                <td>
+                    @(meeting.Hymns?.Count ?? 0)
+                </td>
+                <td>
+                    @(meeting.Speakers?.Count ?? 0)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@meeting.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@meeting.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@meeting.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
