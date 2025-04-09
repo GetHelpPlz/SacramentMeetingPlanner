@@ -18,7 +18,9 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +30,86 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: #592569;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+    font-size: 0.9rem;
+    justify-items: center;
+}
+
+.navbar {
+    background: linear-gradient(to right, #592569, rgba(13, 110, 253, 0.0) 50%);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.nav-link {
+    margin-right: 1rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #0d6efd !important;
+}
+
+/*Navbar Stylizing*/
+.nav-square {
+    gap: 0;
+    border-left: 1px solid #dee2e6;
+}
+
+.nav-square .nav-item {
+    border-right: 1px solid #dee2e6; 
+}
+
+.nav-square-link {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    text-align: center;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-square-link:hover,
+.nav-square-link:focus,
+.nav-square-link.active {
+    background-color: #592569;
+    color: white !important;
+}
+
+
+
+/*Home Page*/
+
+.card-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+    .hover-card:hover .card-icon {
+        transform: scale(1.1);
+    }
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
 }

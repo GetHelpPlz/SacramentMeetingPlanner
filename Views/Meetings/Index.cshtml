@@ -3,13 +3,14 @@
 @{
     string currentSort = ViewBag.CurrentSort as string ?? "";
     string dateSortParam = currentSort == "date_desc" ? "" : "date_desc";
+    // string dateSortParam = (string)ViewBag.CurrentSort == "date_desc" ? "" : "date_desc";
 }
 
 @{
     ViewData["Title"] = "Meetings";
 }
 
-string dateSortParam = (string)ViewBag.CurrentSort == "date_desc" ? "" : "date_desc";
+    
 
 <h2>Meetings</h2>
 

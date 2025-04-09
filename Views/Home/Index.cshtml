@@ -3,13 +3,55 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to the Sacrament Meeting Planner</h1>
+    <h1 class="display-4">Welcome to the YSA Sacrament Planner!</h1>
     <p class="lead">Manage your meetings, speakers, and hymns.</p>
 
-    <div class="mt-4">
-        <a class="btn btn-primary m-2" asp-controller="Meetings" asp-action="Create">Create New Meeting</a>
-        <a class="btn btn-secondary m-2" asp-controller="Meetings" asp-action="Index">View Meetings</a>
-        <a class="btn btn-info m-2" asp-controller="Speakers" asp-action="Index">See Our Speakers</a>
-        <a class="btn btn-success m-2" asp-controller="Hymns" asp-action="Index">Hymn</a>
+    <div class="container mt-5">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <a asp-controller="Meetings" asp-action="Create" class="text-decoration-none">
+                    <div class="card text-center h-100 shadow-sm hover-card">
+                        <div class="card-body">
+                            <img src="~/images/Add_Meeting.webp" class="card-icon mb-3" alt="Create Meeting" />
+                            <h5 class="card-title">Create New Meeting</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-controller="Meetings" asp-action="Index" class="text-decoration-none">
+                    <div class="card text-center h-100 shadow-sm hover-card">
+                        <div class="card-body">
+                            <img src="~/images/Meetings.webp" class="card-icon mb-3" alt="View Meetings" />
+                            <h5 class="card-title">View Meetings</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-controller="Speakers" asp-action="Index" class="text-decoration-none">
+                    <div class="card text-center h-100 shadow-sm hover-card">
+                        <div class="card-body">
+                            <img src="~/images/speakers.webp" class="card-icon mb-3" alt="Speakers" />
+                            <h5 class="card-title">See Our Speakers</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a asp-controller="Hymns" asp-action="Index" class="text-decoration-none">
+                    <div class="card text-center h-100 shadow-sm hover-card">
+                        <div class="card-body">
+                            <img src="~/images/Hymns.webp" class="card-icon mb-3" alt="Hymns" />
+                            <h5 class="card-title">Hymns</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+
