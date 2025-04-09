@@ -47,12 +47,13 @@ namespace SacramentMeetingPlanner.Controllers
             return View(meeting);
         }
 
+        // Meetings
         public IActionResult Index(string sortOrder)
         {
             var meetingsQuery = _context.Meetings
-            .Include(m => m.Hymns)
-            .Include(m => m.Speakers)
-            .AsQueryable();
+                .Include(m => m.Hymns)
+                .Include(m => m.Speakers)
+                .AsQueryable();
 
             switch (sortOrder)
             {
@@ -78,6 +79,32 @@ namespace SacramentMeetingPlanner.Controllers
 
             if (meeting == null)
                 return NotFound();
+
+            foreach (var hymn in meeting.Hymns)
+            {
+                int hymnId;
+                if (int.TryParse(hymn.SelectedHymn, out hymnId))
+                {
+                    var hymnData = _context.Hymns.FirstOrDefault(h => h.Id == hymnId);
+                    if (hymnData != null)
+                    {
+                        hymn.SelectedHymn = hymnData.Name;
+                    }
+                }
+            }
+
+            foreach (var speaker in meeting.Speakers)
+            {
+                int speakerId;
+                if (int.TryParse(speaker.SelectedSpeaker, out speakerId))
+                {
+                    var speakerData = _context.Speakers.FirstOrDefault(s => s.Id == speakerId);
+                    if (speakerData != null)
+                    {
+                        speaker.SelectedSpeaker = $"{speakerData.FirstName} {speakerData.LastName}";
+                    }
+                }
+            }
 
             return View(meeting);
         }
